@@ -1,5 +1,2 @@
--- local bufferline = require('akinsho/bufferline.nvim')
--- require('rebelot/heirline.nvim').setup {
---     on_move = function() bufferline.cycle(1) end,
---     on_move_reverse = function() bufferline.cycle(-1) end
--- }
+
+return {}

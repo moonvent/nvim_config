@@ -1,3 +1,10 @@
+require('heirline').setup({
+  custom_navbar = function()
+    return require('bufferline').bufferline()
+  end,
+})
+
+
 return {
   n = {
     ["<leader>dd"] = { "<cmd>q<cr>", desc = "Quit" },
@@ -29,7 +36,7 @@ return {
 
     ["<leader>bp"] = { "<cmd>:b#<cr>", desc = "Buffer: Return to previous buffer in history" },
     
-    ["<S-l>"] = { "<cmd>:HeirlineCycleNext<cr>", desc = "Buffer: Return to previous buffer in history" },
-    ["<S-h>"] = { "<cmd>:HeirlineCyclePrev<cr>", desc = "Buffer: Return to previous buffer in history" },
+    ["<S-l>"] = { '<cmd>lua require("heirline").move("down")<CR>:lua vim.api.nvim_tabpage_select(vim.api.nvim_get_current_tabpage() + 1)<cr>', desc = "Buffer: Return to previous buffer in history" },
+    ["<S-h>"] = { '<cmd>lua require("heirline").move("up")<CR>:lua vim.api.nvim_tabpage_select(vim.api.nvim_get_current_tabpage() - 1)<cr>', desc = "Buffer: Return to previous buffer in history" },
   },
 }
