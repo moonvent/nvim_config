@@ -1,17 +1,11 @@
-require('heirline').setup({
-  custom_navbar = function()
-    return require('bufferline').bufferline()
-  end,
-})
-
+require('user.dap_configs')
 
 return {
   n = {
     ["<leader>dd"] = { "<cmd>q<cr>", desc = "Quit" },
     ["<leader>d"] = false,
-    -- ["<leader>dr"] = { "<cmd>lua require'dap'.run_last()<cr>", desc = "Debug: Run" },
-
-    ["<leader>lc"] = { "<cmd>lua require'dap'.run(cs_conf)<cr>", desc = "Debug: Run Django conf" },
+    ["<leader>dr"] = false,
+    ["<leader>dt"] = false,
 
     ["<leader>drd"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django conf" },
     ["<leader>drx"] = { "<cmd>lua require'dap'.run(DjangoConf2)<cr>", desc = "Debug: Run Django conf" },
@@ -36,7 +30,7 @@ return {
 
     ["<leader>bp"] = { "<cmd>:b#<cr>", desc = "Buffer: Return to previous buffer in history" },
     
-    ["<S-l>"] = { '<cmd>lua require("heirline").move("down")<CR>:lua vim.api.nvim_tabpage_select(vim.api.nvim_get_current_tabpage() + 1)<cr>', desc = "Buffer: Return to previous buffer in history" },
-    ["<S-h>"] = { '<cmd>lua require("heirline").move("up")<CR>:lua vim.api.nvim_tabpage_select(vim.api.nvim_get_current_tabpage() - 1)<cr>', desc = "Buffer: Return to previous buffer in history" },
+    ["<S-l>"] = { '<cmd>BufferLineCycleNext<cr>', desc = "Buffer: Return to previous buffer in history" },
+    ["<S-h>"] = { '<cmd>BufferLineCyclePrev<cr>', desc = "Buffer: Return to next buffer in history" },
   },
 }
