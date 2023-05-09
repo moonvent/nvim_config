@@ -4,8 +4,11 @@ return {
   n = {
     ["<leader>dd"] = { "<cmd>q<cr>", desc = "Quit" },
     ["<leader>d"] = false,
+    ["<leader>h"] = false,
     ["<leader>dr"] = false,
     ["<leader>dt"] = false,
+
+    ["<leader>hsu"] = { "<cmd>Hupload<cr>", desc = "SFTP: Upload current file in buffer to server" },
 
     ["<leader>drd"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django conf" },
     ["<leader>drx"] = { "<cmd>lua require'dap'.run(DockerFastApi)<cr>", desc = "Debug: Run Django conf" },
