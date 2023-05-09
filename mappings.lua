@@ -8,7 +8,7 @@ return {
     ["<leader>dt"] = false,
 
     ["<leader>drd"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django conf" },
-    ["<leader>drx"] = { "<cmd>lua require'dap'.run(DjangoConf2)<cr>", desc = "Debug: Run Django conf" },
+    ["<leader>drx"] = { "<cmd>lua require'dap'.run(DockerFastApi)<cr>", desc = "Debug: Run Django conf" },
     ["<leader>drf"] = { "<cmd>lua require'dap'.run(LaunchFileConf)<cr>", desc = "Debug: Run file conf" },
     ["<leader>dra"] = { "<cmd>lua require'dap'.run(LaunchAppConf)<cr>", desc = "Debug: Run main file from poetry" },
     -- ["<leader>drx"] = { "<cmd>lua require'dap'.run(XLabFormDebugDocker)<cr>", desc = "Debug: Run xlab forms debugging" },
@@ -32,5 +32,7 @@ return {
     
     ["<S-l>"] = { '<cmd>BufferLineCycleNext<cr>', desc = "Buffer: Return to previous buffer in history" },
     ["<S-h>"] = { '<cmd>BufferLineCyclePrev<cr>', desc = "Buffer: Return to next buffer in history" },
+
+    -- ["<S-k>"] = { vim.lsp.buf.hover, desc = "Buffer: Return to next buffer in history" },
   },
 }

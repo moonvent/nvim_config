@@ -64,22 +64,43 @@ DjangoConf2 = {
 
 
 
-XLabFormDebugDocker = {
-        type = 'python',
-        request = 'attach',
-        name = 'XLabFormDebugDocker',
-        connect = {
-                port = 5678,
-                host = "127.0.0.1",
-        },
-        mode = "remote",
-        pathMappings = {
-                {
-                        localRoot = "/Users/nikitakurkurin/PycharmProjects/ca-form",
-                        remoteRoot = "/home/on-bank",
-                },
-        },
-}
+-- XLabFormDebugDocker = {
+--         type = 'python',
+--         request = 'attach',
+--         name = 'XLabFormDebugDocker',
+--         connect = {
+--                 port = 5678,
+--                 host = "127.0.0.1",
+--         },
+--         mode = "remote",
+--         pathMappings = {
+--                 {
+--                         localRoot = "/Users/nikitakurkurin/PycharmProjects/ca-form",
+--                         remoteRoot = "/home/on-bank",
+--                 },
+--         },
+-- }
+
+
+-- DockerFastApi = {
+--   type = "python",
+--   request = "launch",
+--   name = "Python Docker",
+--   cwd = "${workspaceFolder}",
+--   docker = {
+--     image = "app",
+--     ports = {8000},
+--     mounts = {
+--       {
+--         type= "bind",
+--         source = "${workspaceFolder}",
+--         target = "/code",
+--       },
+--     },
+--     command = "python",
+--     args = {"./main.py"},
+--   }
+-- }
 
 
 local dap = require('dap')
@@ -94,3 +115,32 @@ dap.adapters.python = {
         command = vim.fn.getcwd() .. "/venv/bin/python", -- before start nvim must be in need environment
         args = { '-m', 'debugpy.adapter' },
 }
+
+
+
+-- not work cause I have a arm64
+-- dap.configurations.python = {
+--     type = "python",
+--     request = "attach",
+--     connect = {
+--       port = 5678,
+--       host = "127.0.0.1",
+--     },
+--     mode = "remote",
+--     name = "Container Attach Debug",
+--     cwd = vim.fn.getcwd(),
+--     pathMappings = {
+--       {
+--         localRoot = function()
+--           -- return vim.fn.input("Local code folder > ", vim.fn.getcwd(), "file")
+--           --"/home/alpha2phi/workspace/alpha2phi/python-apps/ml-yolo/backend", -- Local folder the code lives
+--         return "/Users/nikitakurkurin/PycharmProjects/test311"
+--         end,
+--         remoteRoot = function()
+--           -- return vim.fn.input("Container code folder > ", "/", "file")
+--           -- "/fastapi", -- Wherever your Python code lives in the container.
+--         return "/code"
+--         end,
+--       },
+--     },
+--   }
