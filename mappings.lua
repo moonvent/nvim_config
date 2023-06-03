@@ -10,12 +10,12 @@ return {
     ["<leader>qw"] = { "<cmd>q<cr>", desc = "Quit from buffer" },
     ["<leader>wq"] = { "<cmd>wqa<cr>", desc = "Quit with saving session and buffers" },
 
-    ["<leader>hsu"] = { "<cmd>Hupload<cr>", desc = "SFTP: Upload current file in buffer to server" },
-
-    ["<leader>drd"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django conf" },
-    ["<leader>drx"] = { "<cmd>lua require'dap'.run(DockerFastApi)<cr>", desc = "Debug: Run Django conf" },
-    ["<leader>drf"] = { "<cmd>lua require'dap'.run(LaunchFileConf)<cr>", desc = "Debug: Run file conf" },
-    ["<leader>dra"] = { "<cmd>lua require'dap'.run(LaunchAppConf)<cr>", desc = "Debug: Run main file from poetry" },
+    -- ["<leader>hsu"] = { "<cmd>Hupload<cr>", desc = "SFTP: Upload current file in buffer to server" },
+    --
+    -- ["<leader>drx"] = { "<cmd>lua require'dap'.run(DockerFastApi)<cr>", desc = "Debug: Run Django conf" },
+    ["<leader><F1>"] = { "<cmd>lua require'dap'.run(LaunchAppConf)<cr>", desc = "Debug: Run main file from poetry" },
+    ["<leader><F2>"] = { "<cmd>lua require'dap'.run(LaunchFileConf)<cr>", desc = "Debug: Run file conf" },
+    ["<leader><F3>"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django conf" },
     -- ["<leader>drx"] = { "<cmd>lua require'dap'.run(XLabFormDebugDocker)<cr>", desc = "Debug: Run xlab forms debugging" },
     -- ["<leader>drx"] = { "<cmd>lua require'dap.repl'.omnifunc<cr>", desc = "Debug: Run last session" },
 
@@ -35,9 +35,17 @@ return {
 
     ["<leader>bp"] = { "<cmd>:b#<cr>", desc = "Buffer: Return to previous buffer in history" },
     
-    ["<S-l>"] = { '<cmd>BufferLineCycleNext<cr>', desc = "Buffer: Return to previous buffer in history" },
-    ["<S-h>"] = { '<cmd>BufferLineCyclePrev<cr>', desc = "Buffer: Return to next buffer in history" },
+    -- ["<S-l>"] = { ']b', desc = "Buffer: Return to previous buffer in history" },
+    -- ["<S-h>"] = { '[b', desc = "Buffer: Return to next buffer in history" },
 
     -- ["<S-k>"] = { vim.lsp.buf.hover, desc = "Buffer: Return to next buffer in history" },
-  },
+    --
+    ["<S-l>"] = {
+      function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end,
+      desc = "Next buffer",
+    },
+    ["<S-h>"] = {
+      function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
+      desc = "Previous buffer",
+    },  },
 }
