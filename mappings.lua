@@ -2,11 +2,13 @@ require('user.dap_configs')
 
 return {
   n = {
-    ["<leader>dd"] = { "<cmd>q<cr>", desc = "Quit" },
     ["<leader>d"] = false,
     ["<leader>h"] = false,
     ["<leader>dr"] = false,
     ["<leader>dt"] = false,
+    ["<leader>q"] = false,
+    ["<leader>qw"] = { "<cmd>q<cr>", desc = "Quit from buffer" },
+    ["<leader>wq"] = { "<cmd>wqa<cr>", desc = "Quit with saving session and buffers" },
 
     ["<leader>hsu"] = { "<cmd>Hupload<cr>", desc = "SFTP: Upload current file in buffer to server" },
 
