@@ -34,6 +34,8 @@ return {
     ["<leader>dbt"] = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = "Debug: Toggle Breakpoint" },
 
     ["<leader>bp"] = { "<cmd>:b#<cr>", desc = "Buffer: Return to previous buffer in history" },
+    ["<F1>"] = { "<cmd>let @+=expand('%')<cr>", desc = "Copy relative path of current opened in buffer file" },
+    ["<F2>"] = { "<cmd>let @+=expand('%:p')<cr>", desc = "Copy relative path of current opened in buffer file" },
     
     -- ["<S-l>"] = { ']b', desc = "Buffer: Return to previous buffer in history" },
     -- ["<S-h>"] = { '[b', desc = "Buffer: Return to next buffer in history" },
@@ -48,4 +50,6 @@ return {
       function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
       desc = "Previous buffer",
     },  },
+
+    -- ["<F1>"] = { "<cmd>let a=1<cr>", desc = "Buffer: Return to previous buffer in history" },
 }
