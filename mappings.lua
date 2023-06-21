@@ -16,6 +16,7 @@ return {
     ["<leader><F1>"] = { "<cmd>lua require'dap'.run(LaunchAppConf)<cr>", desc = "Debug: Run main file from poetry" },
     ["<leader><F2>"] = { "<cmd>lua require'dap'.run(LaunchFileConf)<cr>", desc = "Debug: Run file conf" },
     ["<leader><F3>"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django conf" },
+    ["<leader><F4>"] = { "<cmd>lua require'dap'.run_last()<cr>", desc = "Debug: Run Django conf" },
     -- ["<leader>drx"] = { "<cmd>lua require'dap'.run(XLabFormDebugDocker)<cr>", desc = "Debug: Run xlab forms debugging" },
     -- ["<leader>drx"] = { "<cmd>lua require'dap.repl'.omnifunc<cr>", desc = "Debug: Run last session" },
 
