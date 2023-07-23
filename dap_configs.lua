@@ -63,46 +63,6 @@ DjangoConf2 = {
 }
 
 
-
--- XLabFormDebugDocker = {
---         type = 'python',
---         request = 'attach',
---         name = 'XLabFormDebugDocker',
---         connect = {
---                 port = 5678,
---                 host = "127.0.0.1",
---         },
---         mode = "remote",
---         pathMappings = {
---                 {
---                         localRoot = "/Users/nikitakurkurin/PycharmProjects/ca-form",
---                         remoteRoot = "/home/on-bank",
---                 },
---         },
--- }
-
-
--- DockerFastApi = {
---   type = "python",
---   request = "launch",
---   name = "Python Docker",
---   cwd = "${workspaceFolder}",
---   docker = {
---     image = "app",
---     ports = {8000},
---     mounts = {
---       {
---         type= "bind",
---         source = "${workspaceFolder}",
---         target = "/code",
---       },
---     },
---     command = "python",
---     args = {"./main.py"},
---   }
--- }
-
-
 local dap = require('dap')
 
 
@@ -144,3 +104,30 @@ dap.adapters.python = {
 --       },
 --     },
 --   }
+--
+--
+
+
+-- Debugger installation location
+local HOME = os.getenv "HOME"
+local DEBUGGER_LOCATION = HOME .. "/.local/share/nvim/netcoredbg"
+
+-- Adapter configuration
+--
+dap.adapters.coreclr = {
+    type = "executable",
+    command = DEBUGGER_LOCATION .. "/netcoredbg",
+    args = { "--interpreter=vscode" },
+}
+
+cs = {
+    type = "coreclr",
+    name = "launch - netcoredbg",
+    request = "launch",
+    -- program = function()
+        -- return vim.fn.input('Path to DLL > ', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+    -- end,
+    program = "/Volumes/KINGSTON/Unity/UnityProjects/test_c_sharp/consoleproject2/bin/Debug/net7.0/consoleproject2.dll"
+}
+
+
