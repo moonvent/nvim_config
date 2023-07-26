@@ -13,11 +13,11 @@ return {
     -- ["<leader>hsu"] = { "<cmd>Hupload<cr>", desc = "SFTP: Upload current file in buffer to server" },
     --
     -- ["<leader>drx"] = { "<cmd>lua require'dap'.run(DockerFastApi)<cr>", desc = "Debug: Run Django conf" },
-    ["<leader><F1>"] = { "<cmd>lua require'dap'.run(LaunchAppConf)<cr>", desc = "Debug: Run main file from poetry" },
-    ["<leader><F2>"] = { "<cmd>lua require'dap'.run(LaunchFileConf)<cr>", desc = "Debug: Run file conf" },
-    ["<leader><F3>"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django conf" },
-    ["<leader><F4>"] = { "<cmd>lua require'dap'.run_last()<cr>", desc = "Debug: Run Django conf" },
-    ["<leader><F5>"] = { "<cmd>lua require'dap'.run(cs)<cr>", desc = "Debug: Run Django conf" },
+    ["<leader><F1>"] = { "<cmd>lua require'dap'.run(LaunchAppConf)<cr>", desc = "Debug: Run main.py file" },
+    ["<leader><F2>"] = { "<cmd>lua require'dap'.run(LaunchFileConf)<cr>", desc = "Debug: Run current file in buffer" },
+    ["<leader><F3>"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django project" },
+    ["<leader><F4>"] = { "<cmd>lua require'dap'.run_last()<cr>", desc = "Debug: Run last configuration" },
+    ["<leader><F5>"] = { "<cmd>lua require'dap'.run(cs)<cr>", desc = "Debug: Run c# project" },
     -- ["<leader>drx"] = { "<cmd>lua require'dap'.run(XLabFormDebugDocker)<cr>", desc = "Debug: Run xlab forms debugging" },
     -- ["<leader>drx"] = { "<cmd>lua require'dap.repl'.omnifunc<cr>", desc = "Debug: Run last session" },
 
