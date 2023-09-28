@@ -28,4 +28,7 @@ require('lspconfig').omnisharp.setup{
 }
 
 
+require'lspconfig'.gdscript.setup{}
+
+
 return {}
