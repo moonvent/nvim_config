@@ -1,5 +1,34 @@
 require('user.dap_configs')
 
+
+vim.cmd('filetype plugin on')
+
+
+map = function(mode, lhs, rhs, opts)
+    local options = { noremap = true, silent = true }
+    for k, v in pairs(opts or {}) do
+        options[k] = v
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
+
+python_mappings = function()
+    map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(LaunchAppConf)<cr>")
+    map('n', '<Leader><F2>', "<cmd>lua require'dap'.run(LaunchFileConf)<cr>")
+    map('n', '<Leader><F3>', "<cmd>lua require'dap'.run(DjangoConf)<cr>")
+    map('n', '<Leader><F4>', "<cmd>lua require'dap'.run(DjangoConf3)<cr>")
+end
+
+godot_mappings = function()
+    map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(gdscript)<cr>")
+end
+
+-- Set up autocmds
+
+vim.cmd('autocmd FileType python lua python_mappings()')
+vim.cmd('autocmd FileType gdscript lua godot_mappings()')
+
+
 return {
   n = {
     ["<leader>d"] = false,
@@ -9,17 +38,6 @@ return {
     ["<leader>q"] = false,
     ["<leader>qw"] = { "<cmd>q<cr>", desc = "Quit from buffer" },
     ["<leader>wq"] = { "<cmd>wqa<cr>", desc = "Quit with saving session and buffers" },
-
-    -- ["<leader>hsu"] = { "<cmd>Hupload<cr>", desc = "SFTP: Upload current file in buffer to server" },
-    --
-    -- ["<leader>drx"] = { "<cmd>lua require'dap'.run(DockerFastApi)<cr>", desc = "Debug: Run Django conf" },
-    ["<leader><F1>"] = { "<cmd>lua require'dap'.run(LaunchAppConf)<cr>", desc = "Debug: Run main.py file" },
-    ["<leader><F2>"] = { "<cmd>lua require'dap'.run(LaunchFileConf)<cr>", desc = "Debug: Run current file in buffer" },
-    ["<leader><F3>"] = { "<cmd>lua require'dap'.run(DjangoConf)<cr>", desc = "Debug: Run Django project" },
-    ["<leader><F4>"] = { "<cmd>lua require'dap'.run_last()<cr>", desc = "Debug: Run last configuration" },
-    ["<leader><F5>"] = { "<cmd>lua require'dap'.run(cs)<cr>", desc = "Debug: Run c# project" },
-    -- ["<leader>drx"] = { "<cmd>lua require'dap'.run(XLabFormDebugDocker)<cr>", desc = "Debug: Run xlab forms debugging" },
-    -- ["<leader>drx"] = { "<cmd>lua require'dap.repl'.omnifunc<cr>", desc = "Debug: Run last session" },
 
     ["<leader>dc"] = { "<cmd>lua require'dap'.continue()<cr>", desc = "Debug: Continue" },
 
@@ -53,5 +71,4 @@ return {
       desc = "Previous buffer",
     },  },
 
-    -- ["<F1>"] = { "<cmd>let a=1<cr>", desc = "Buffer: Return to previous buffer in history" },
 }

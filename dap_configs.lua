@@ -51,6 +51,20 @@ DjangoConf = {
         name = 'Django',
         program = vim.fn.getcwd() .. '/manage.py', -- NOTE: Adapt path to manage.py as needed
         args = { 'runserver', '--noreload' },
+
+}
+
+
+DjangoConf3 = {
+        type = 'python',
+        request = 'launch',
+        name = 'Django',
+        program = vim.fn.getcwd() .. '/manage.py', -- NOTE: Adapt path to manage.py as needed
+        args = { 'import-data', 'etc/rpc/bbs-auto/bbs-auto-data-mapping.yml', '-ie', 'category', },
+        -- args = { 'infobackend', },
+
+        env = {
+        }
 }
 
 
@@ -60,6 +74,15 @@ DjangoConf2 = {
         name = 'Django',
         program = vim.fn.getcwd() .. '/manage.py', -- NOTE: Adapt path to manage.py as needed
         args = { 'runserver', '8001', '--noreload' },
+}
+
+
+gdscript = {
+        type = "godot",
+        request = "launch",
+        name = "Launch scene",
+        project = "${workspaceFolder}",
+        launch_scene = true,
 }
 
 
@@ -74,6 +97,13 @@ dap.adapters.python = {
         -- command = os.getenv("VIRTUAL_ENV") .. "/bin/python"; -- before start nvim must be in need environment
         command = vim.fn.getcwd() .. "/venv/bin/python", -- before start nvim must be in need environment
         args = { '-m', 'debugpy.adapter' },
+}
+
+
+dap.adapters.godot = {
+        type = "server",
+        host = '127.0.0.1',
+        port = 59502,
 }
 
 
@@ -129,5 +159,4 @@ cs = {
     -- end,
     program = "/Volumes/KINGSTON/Unity/UnityProjects/test_c_sharp/consoleproject2/bin/Debug/net7.0/consoleproject2.dll"
 }
-
 
