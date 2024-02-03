@@ -5,28 +5,120 @@ vim.cmd('filetype plugin on')
 
 
 map = function(mode, lhs, rhs, opts)
-    local options = { noremap = true, silent = true }
-    for k, v in pairs(opts or {}) do
-        options[k] = v
-    end
-    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+  local options = { noremap = true, silent = true }
+  for k, v in pairs(opts or {}) do
+    options[k] = v
+  end
+  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 python_mappings = function()
-    map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(LaunchAppConf)<cr>")
-    map('n', '<Leader><F2>', "<cmd>lua require'dap'.run(LaunchFileConf)<cr>")
-    map('n', '<Leader><F3>', "<cmd>lua require'dap'.run(DjangoConf)<cr>")
-    map('n', '<Leader><F4>', "<cmd>lua require'dap'.run(DjangoConf3)<cr>")
+  map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(LaunchAppConf)<cr>")
+  map('n', '<Leader><F2>', "<cmd>lua require'dap'.run(LaunchFileConf)<cr>")
+  map('n', '<Leader><F3>', "<cmd>lua require'dap'.run(DjangoConf)<cr>")
+  map('n', '<Leader><F4>', "<cmd>lua require'dap'.run(DjangoConf3)<cr>")
+  map('n', '<Leader><F5>', "<cmd>lua require'dap'.run(LaunchTestConf)<cr>")
+end
+
+java_mappings = function()
+  map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(javaScript)<cr>")
+  -- map('n', '<Leader><F2>', "<cmd>lua require'dap'.run(LaunchFileConf)<cr>")
+  -- map('n', '<Leader><F3>', "<cmd>lua require'dap'.run(DjangoConf)<cr>")
+  -- map('n', '<Leader><F4>', "<cmd>lua require'dap'.run(DjangoConf3)<cr>")
+  -- map('n', '<Leader><F5>', "<cmd>lua require'dap'.run(LaunchTestConf)<cr>")
+  vim.bo.tabstop = 2
+  vim.bo.shiftwidth = 2
+  vim.bo.expandtab = true
 end
 
 godot_mappings = function()
-    map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(gdscript)<cr>")
+  map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(gdscript)<cr>")
 end
+
+
+local ru_mappings = {
+  { 'й', 'q' },
+  { 'ц', 'w' },
+  { 'у', 'e' },
+  { 'к', 'r' },
+  { 'е', 't' },
+  { 'н', 'y' },
+  { 'г', 'u' },
+  { 'ш', 'i' },
+  { 'щ', 'o' },
+  { 'з', 'p' },
+  { 'х', '[' },
+  { 'ъ', ']' },
+  { 'ф', 'a' },
+  { 'ы', 's' },
+  { 'в', 'd' },
+  { 'а', 'f' },
+  { 'п', 'g' },
+  { 'р', 'h' },
+  { 'о', 'j' },
+  { 'л', 'k' },
+  { 'д', 'l' },
+  { 'ж', ';' },
+  { 'э', '\'' },
+  { 'я', 'z' },
+  { 'ч', 'x' },
+  { 'с', 'c' },
+  { 'м', 'v' },
+  { 'и', 'b' },
+  { 'т', 'n' },
+  { 'ь', 'm' },
+  { 'б', ',' },
+  { 'ю', '.' },
+  { 'Й', 'Q' },
+  { 'Ц', 'W' },
+  { 'У', 'E' },
+  { 'К', 'R' },
+  { 'Е', 'T' },
+  { 'Н', 'Y' },
+  { 'Г', 'U' },
+  { 'Ш', 'I' },
+  { 'Щ', 'O' },
+  { 'З', 'P' },
+  { 'Х', '{' },
+  { 'Ъ', '}' },
+  { 'Ф', 'A' },
+  { 'Ы', 'S' },
+  { 'В', 'D' },
+  { 'А', 'F' },
+  { 'П', 'G' },
+  { 'Р', 'H' },
+  { 'О', 'J' },
+  { 'Л', 'K' },
+  { 'Д', 'L' },
+  { 'Ж', ':' },
+  { 'Э', '"' },
+  { 'Я', 'Z' },
+  { 'Ч', 'X' },
+  { 'С', 'C' },
+  { 'М', 'V' },
+  { 'И', 'B' },
+  { 'Т', 'N' },
+  { 'Ь', 'M' },
+  { 'Б', '<' },
+  { 'Ю', '>' },
+}
+
+local function create_ru_mappings()
+  for _, mapping in ipairs(ru_mappings) do
+    local ru_key, en_key = unpack(mapping)
+
+    vim.api.nvim_set_keymap('n', ru_key, en_key, { noremap = true })
+    vim.api.nvim_set_keymap('v', ru_key, en_key, { noremap = true })
+  end
+end
+
+create_ru_mappings()
 
 -- Set up autocmds
 
 vim.cmd('autocmd FileType python lua python_mappings()')
 vim.cmd('autocmd FileType gdscript lua godot_mappings()')
+vim.cmd('autocmd FileType java lua java_mappings()')
 
 
 return {
@@ -56,7 +148,7 @@ return {
     ["<leader>bp"] = { "<cmd>:b#<cr>", desc = "Buffer: Return to previous buffer in history" },
     ["<F1>"] = { "<cmd>let @+=expand('%')<cr>", desc = "Copy relative path of current opened in buffer file" },
     ["<F2>"] = { "<cmd>let @+=expand('%:p')<cr>", desc = "Copy relative path of current opened in buffer file" },
-    
+
     -- ["<S-l>"] = { ']b', desc = "Buffer: Return to previous buffer in history" },
     -- ["<S-h>"] = { '[b', desc = "Buffer: Return to next buffer in history" },
 
@@ -69,6 +161,7 @@ return {
     ["<S-h>"] = {
       function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end,
       desc = "Previous buffer",
-    },  },
+    },
+  },
 
 }

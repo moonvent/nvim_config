@@ -2,7 +2,7 @@ local nvim_lsp = require('lspconfig')
 
 
 -- require('lspconfig').pylsp.setup{
---     -- pylsp = {  
+--     -- pylsp = {
 --     --   plugins = {
 --     --     autopep8 = {enabled = false},
 --     --     yapf = {enabled = false,
@@ -18,9 +18,9 @@ local pid = vim.fn.getpid()
 local omnisharp_bin = "/Users/nikitakurkurin/Documents/omnisharp-linux-arm64/run"
 
 
-require('lspconfig').omnisharp.setup{
-    cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
-    root_dir = nvim_lsp.util.root_pattern("*.csproj","*.sln");
+require('lspconfig').omnisharp.setup {
+    cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+    root_dir = nvim_lsp.util.root_pattern("*.csproj", "*.sln"),
     -- handlers = {
     --   ["textDocument/publishDiagnostics"] = function() end,
     -- };
@@ -28,7 +28,25 @@ require('lspconfig').omnisharp.setup{
 }
 
 
-require'lspconfig'.gdscript.setup{}
+require('lspconfig').gdscript.setup {}
+
+
+-- require('lspconfig').jdtls.setup({
+--     settings = {
+--         java = {
+--             configuration = {
+--                 runtimes = {
+--                     {
+--                         name = "JavaSE-20",
+--                         path = "/Users/nikitakurkurin/.sdkman/candidates/java/20.0.2",
+--                         default = true,
+--                     }
+--                 }
+--             }
+--         }
+--     }
+-- })
+
 
 
 return {}
