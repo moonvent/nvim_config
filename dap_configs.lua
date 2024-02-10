@@ -1,6 +1,8 @@
 path_to_python_from_venv = "/venv/bin/python"
 
 
+
+
 -- For sing file
 LaunchFileConf = {
   -- The first three options are required by nvim-dap
@@ -163,56 +165,61 @@ dap.adapters.java = {
 }
 
 
+local cpptools_path = vim.fn.stdpath("data") .. "/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
 
--- not work cause I have a arm64
--- dap.configurations.python = {
---     type = "python",
---     request = "attach",
---     connect = {
---       port = 5678,
---       host = "127.0.0.1",
---     },
---     mode = "remote",
---     name = "Container Attach Debug",
---     cwd = vim.fn.getcwd(),
---     pathMappings = {
---       {
---         localRoot = function()
---           -- return vim.fn.input("Local code folder > ", vim.fn.getcwd(), "file")
---           --"/home/alpha2phi/workspace/alpha2phi/python-apps/ml-yolo/backend", -- Local folder the code lives
---         return "/Users/nikitakurkurin/PycharmProjects/test311"
---         end,
---         remoteRoot = function()
---           -- return vim.fn.input("Container code folder > ", "/", "file")
---           -- "/fastapi", -- Wherever your Python code lives in the container.
---         return "/code"
---         end,
---       },
+
+dap.adapters.lldb = {
+  id = 'lldb',
+  type = 'executable',
+  command = cpptools_path,
+}
+
+
+-- local mason_registry = require("mason-registry")
+--
+--
+-- vim.g.rustaceanvim = function()
+--   -- Update this path
+--   local extension_path = mason_registry.get_package("codelldb")
+--   -- local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.10.0/'
+--   local codelldb_path = extension_path .. 'adapter/codelldb'
+--   local liblldb_path = extension_path .. 'lldb/lib/liblldb'
+--   local this_os = vim.uv.os_uname().sysname;
+--
+--   -- The path is different on Windows
+--   -- The liblldb extension is .so for Linux and .dylib for MacOS
+--   liblldb_path = liblldb_path .. (this_os == "Linux" and ".so" or ".dylib")
+--
+--   local cfg = require('rustaceanvim.config')
+--   return {
+--     dap = {
+--       adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
 --     },
 --   }
---
---
+-- end
 
+local rt = require("rust-tools")
+local mason_registry = require("mason-registry")
 
--- Debugger installation location
-local HOME = os.getenv "HOME"
-local DEBUGGER_LOCATION = HOME .. "/.local/share/nvim/netcoredbg"
+local codelldb = mason_registry.get_package("codelldb")
+local extension_path = codelldb:get_install_path() .. "/extension/"
+local codelldb_path = extension_path .. "adapter/codelldb"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
 
--- -- Adapter configuration
--- --
--- dap.adapters.coreclr = {
---         type = "executable",
---         command = DEBUGGER_LOCATION .. "/netcoredbg",
---         args = { "--interpreter=vscode" },
--- }
---
--- cs = {
---         type = "coreclr",
---         name = "launch - netcoredbg",
---         request = "launch",
---         -- program = function()
---         -- return vim.fn.input('Path to DLL > ', vim.fn.getcwd() .. '/bin/Debug/', 'file')
---         -- end,
---         program =
---         "/Volumes/KINGSTON/Unity/UnityProjects/test_c_sharp/consoleproject2/bin/Debug/net7.0/consoleproject2.dll"
--- }
+rt.setup({
+  dap = {
+    adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+  },
+  server = {
+    capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    on_attach = function(_, bufnr)
+      vim.keymap.set("n", "<Leader>k", rt.hover_actions.hover_actions, { buffer = bufnr })
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+  tools = {
+    hover_actions = {
+      auto_focus = true,
+    },
+  },
+})

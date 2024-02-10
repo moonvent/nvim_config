@@ -31,6 +31,16 @@ java_mappings = function()
   vim.bo.expandtab = true
 end
 
+
+rust_mappings = function()
+  map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(rust)<cr>")
+  -- map('n', '<Leader><F2>', "<cmd>lua require'dap'.run(LaunchFileConf)<cr>")
+  -- map('n', '<Leader><F3>', "<cmd>lua require'dap'.run(DjangoConf)<cr>")
+  -- map('n', '<Leader><F4>', "<cmd>lua require'dap'.run(DjangoConf3)<cr>")
+  -- map('n', '<Leader><F5>', "<cmd>lua require'dap'.run(LaunchTestConf)<cr>")
+end
+
+
 godot_mappings = function()
   map('n', '<Leader><F1>', "<cmd>lua require'dap'.run(gdscript)<cr>")
 end
@@ -112,13 +122,14 @@ local function create_ru_mappings()
   end
 end
 
-create_ru_mappings()
+-- create_ru_mappings()
 
 -- Set up autocmds
 
 vim.cmd('autocmd FileType python lua python_mappings()')
 vim.cmd('autocmd FileType gdscript lua godot_mappings()')
 vim.cmd('autocmd FileType java lua java_mappings()')
+vim.cmd('autocmd FileType rust lua rust_mappings()')
 
 
 return {
