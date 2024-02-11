@@ -146,35 +146,49 @@ dap.adapters.godot = {
 }
 
 
--- dap.adapters.java = {
---   type = 'server',
---   host = '127.0.0.1',
---   port = 33829,
--- }
+local cpptools_path = vim.fn.stdpath("data") .. "/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
+dap.adapters.lldb = {
+  id = 'lldb',
+  type = 'executable',
+  command = cpptools_path,
+}
+
+local HOME = os.getenv("HOME") or os.getenv("USERPROFILE")
+local RUST_DEBUGGER_PORT = 13001
 
 
--- local rt = require("rust-tools")
--- local mason_registry = require("mason-registry")
---
--- local codelldb = mason_registry.get_package("codelldb")
--- local extension_path = codelldb:get_install_path() .. "/extension/"
--- local codelldb_path = extension_path .. "adapter/codelldb"
--- local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
---
--- rt.setup({
---   dap = {
---     adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
---   },
---   server = {
---     capabilities = require("cmp_nvim_lsp").default_capabilities(),
---     on_attach = function(_, bufnr)
---       vim.keymap.set("n", "<Leader>k", rt.hover_actions.hover_actions, { buffer = bufnr })
---       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
---     end,
---   },
---   tools = {
---     hover_actions = {
---       auto_focus = true,
---     },
---   },
--- })
+dap.adapters.codelldb = {
+  type = 'server',
+  port = RUST_DEBUGGER_PORT,
+  executable = {
+    command = HOME .. '/Documents/rust_debugger/extension/adapter/codelldb',
+    args = { "--port", RUST_DEBUGGER_PORT },
+  }
+}
+
+
+rust = {
+  name = "(lldb) Launch file",
+  type = "codelldb",
+  request = "launch",
+  program = HOME .. '/rust_projects/tests/target/debug/tests',
+  cwd = '${workspaceFolder}',
+}
+
+dap.listeners.before.event_terminated["dapui_config"] = function()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+end
+
+
+local old_func = dap.listeners.after.event_initialized["dapui_config"]
+
+dap_repl = require('dap.repl')
+
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  old_func()
+  dap_repl.append(first_text_for_output_after_repl_is_start)
+end
+
+
+first_text_for_output_after_repl_is_start = ""

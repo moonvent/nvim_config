@@ -32,9 +32,14 @@ java_mappings = function()
 end
 
 
+-- rust_mappings = function()
+--   map('n', '<Leader><F1>', "<cmd>:RustLsp debuggables<cr>")
+--   map('n', 'gd', "<cmd>:RustLsp hover actions<cr>")
+-- end
+
 rust_mappings = function()
-  map('n', '<Leader><F1>', "<cmd>:RustLsp debuggables<cr>")
-  map('n', 'gd', "<cmd>:RustLsp hover actions<cr>")
+  map('n', '<Leader><F1>', "<cmd>lua rust_build_and_debug()<cr>")
+  -- map('n', 'gd', "<cmd>:RustLsp hover actions<cr>")
 end
 
 
@@ -175,7 +180,11 @@ local global_mappings = {
 }
 
 
+function rust_build_and_debug()
+  first_text_for_output_after_repl_is_start = vim.fn.system('cargo build')
 
-
+  local dap = require('dap')
+  dap.run(rust)
+end
 
 return global_mappings
