@@ -1,8 +1,5 @@
 path_to_python_from_venv = "/venv/bin/python"
 
-
-
-
 -- For sing file
 LaunchFileConf = {
   -- The first three options are required by nvim-dap
@@ -115,7 +112,7 @@ gdscript = {
 }
 
 
-javaScript = {
+java = {
   type = "java",
   request = "launch",
   name = "java test",
@@ -126,15 +123,6 @@ javaScript = {
   "-Dfabric.dli.config=/Users/nikitakurkurin/MinecraftModsCreation/HPHud/.gradle/loom-cache/launch.cfg -Dfabric.dli.env=client -XstartOnFirstThread -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient",
   cwd = "${workspaceFolder}/run",
 }
-
--- javaScript = {
---         type = "java",
---         request = 'attach',
---         name = "Debug (Attach) - Remote",
---         hostName = "127.0.0.1",
---         port = 58936,
--- }
-
 
 
 local dap = require('dap')
@@ -158,68 +146,35 @@ dap.adapters.godot = {
 }
 
 
-dap.adapters.java = {
-  type = 'server',
-  host = '127.0.0.1',
-  port = 33829,
-}
+-- dap.adapters.java = {
+--   type = 'server',
+--   host = '127.0.0.1',
+--   port = 33829,
+-- }
 
 
-local cpptools_path = vim.fn.stdpath("data") .. "/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
-
-
-dap.adapters.lldb = {
-  id = 'lldb',
-  type = 'executable',
-  command = cpptools_path,
-}
-
-
+-- local rt = require("rust-tools")
 -- local mason_registry = require("mason-registry")
 --
+-- local codelldb = mason_registry.get_package("codelldb")
+-- local extension_path = codelldb:get_install_path() .. "/extension/"
+-- local codelldb_path = extension_path .. "adapter/codelldb"
+-- local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
 --
--- vim.g.rustaceanvim = function()
---   -- Update this path
---   local extension_path = mason_registry.get_package("codelldb")
---   -- local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.10.0/'
---   local codelldb_path = extension_path .. 'adapter/codelldb'
---   local liblldb_path = extension_path .. 'lldb/lib/liblldb'
---   local this_os = vim.uv.os_uname().sysname;
---
---   -- The path is different on Windows
---   -- The liblldb extension is .so for Linux and .dylib for MacOS
---   liblldb_path = liblldb_path .. (this_os == "Linux" and ".so" or ".dylib")
---
---   local cfg = require('rustaceanvim.config')
---   return {
---     dap = {
---       adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
+-- rt.setup({
+--   dap = {
+--     adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+--   },
+--   server = {
+--     capabilities = require("cmp_nvim_lsp").default_capabilities(),
+--     on_attach = function(_, bufnr)
+--       vim.keymap.set("n", "<Leader>k", rt.hover_actions.hover_actions, { buffer = bufnr })
+--       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+--     end,
+--   },
+--   tools = {
+--     hover_actions = {
+--       auto_focus = true,
 --     },
---   }
--- end
-
-local rt = require("rust-tools")
-local mason_registry = require("mason-registry")
-
-local codelldb = mason_registry.get_package("codelldb")
-local extension_path = codelldb:get_install_path() .. "/extension/"
-local codelldb_path = extension_path .. "adapter/codelldb"
-local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
-
-rt.setup({
-  dap = {
-    adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-  },
-  server = {
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
-    on_attach = function(_, bufnr)
-      vim.keymap.set("n", "<Leader>k", rt.hover_actions.hover_actions, { buffer = bufnr })
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  },
-  tools = {
-    hover_actions = {
-      auto_focus = true,
-    },
-  },
-})
+--   },
+-- })
