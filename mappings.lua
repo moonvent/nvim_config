@@ -34,10 +34,7 @@ end
 
 rust_mappings = function()
   map('n', '<Leader><F1>', "<cmd>:RustLsp debuggables<cr>")
-  -- map('n', '<Leader><F2>', "<cmd>lua require'dap'.run(LaunchFileConf)<cr>")
-  -- map('n', '<Leader><F3>', "<cmd>lua require'dap'.run(DjangoConf)<cr>")
-  -- map('n', '<Leader><F4>', "<cmd>lua require'dap'.run(DjangoConf3)<cr>")
-  -- map('n', '<Leader><F5>', "<cmd>lua require'dap'.run(LaunchTestConf)<cr>")
+  map('n', 'gd', "<cmd>:RustLsp hover actions<cr>")
 end
 
 
