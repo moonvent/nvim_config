@@ -167,11 +167,19 @@ dap.adapters.codelldb = {
 }
 
 
+function getDirectoryName(path)
+  local pattern = "([^/\\]+)[/\\]?$"
+  local name = path:match(pattern)
+  return name
+end
+
+start_file_name = getDirectoryName(vim.fn.getcwd())
+
 rust = {
   name = "(lldb) Launch file",
   type = "codelldb",
   request = "launch",
-  program = HOME .. '/rust_projects/tests/target/debug/tests',
+  program = string.format('${workspaceFolder}/target/debug/%s', start_file_name),
   cwd = '${workspaceFolder}',
 }
 

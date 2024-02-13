@@ -187,4 +187,9 @@ function rust_build_and_debug()
   dap.run(rust)
 end
 
+vim.api.nvim_exec([[
+  autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+]], false)
+
+
 return global_mappings
