@@ -53,9 +53,9 @@ DjangoConf = {
   -- program = 'manage.py', -- NOTE: Adapt path to manage.py as needed
   args = { 'runserver', '--noreload' },
 
-  env = {
-    DEBUG_SQL = '1',
-  },
+  -- env = {
+  --   DEBUG_SQL = '1',
+  -- },
 }
 
 LaunchTestConf = {
