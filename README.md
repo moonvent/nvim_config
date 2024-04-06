@@ -13,17 +13,17 @@ DO NOT START NVIM from that (I don't know why..., but NVIM become a crazy from e
 - `black` (for formatting)
 
 4. Create a `pyrightconfig.json` file, with this content:
-"""
+```json
 {
   "venvPath": "venv",
   "venv": "."
 }
-"""
+```
 First, it's folder name of venv folder, second key, it's a path to venv folder
 
 5. In `pyproject.toml` you can setup some features, like formatter work, tests and other, my config for formatter is:
-"""
-<!-- for formatter -->
+```yaml
+# for formatter
 [tool.black]
 exclude = '''
     (^|/)(\..*|venv|build|dist)/
@@ -31,7 +31,7 @@ exclude = '''
 skip-string-normalization = true
 color = true
 
-<!-- for pytest -->
+# for pytest
 [tool.pytest.ini_options]
 markers = [
     "test_mark_name_1: first test",
@@ -43,8 +43,9 @@ filterwarnings =[
     "ignore::DeprecationWarning"
 ]
 addopts = "-vv -v --cov=. --cov-report=term  --cov-report=html" 
-addopts = "-vv -v" <!-- for development -->
-"""
+addopts = "-vv -v" # for development
+
+```
 
 
 6. Now, you can use debbuger and start the projects:
