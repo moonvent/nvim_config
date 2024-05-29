@@ -141,6 +141,7 @@ local global_mappings = {
     ["<leader>dr"] = false,
     ["<leader>dt"] = false,
     ["<leader>q"] = false,
+    ["<leader>pp"] = { "<cmd>put 0<cr>", desc = "Put copied value (even after cutting)" },
     ["<leader>qw"] = { "<cmd>q<cr>", desc = "Quit from buffer" },
     ["<leader>wq"] = { "<cmd>wqa<cr>", desc = "Quit with saving session and buffers" },
 
@@ -157,6 +158,8 @@ local global_mappings = {
 
     ["<leader>dbc"] = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", desc = "Debug: Clear all breakpoints" },
     ["<leader>dbt"] = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = "Debug: Toggle Breakpoint" },
+
+    ["<leader>1"] = { "<cmd>lua vim.diagnostic.open_float()<cr>", desc = "Open error hover" },
 
     ["<leader>bp"] = { "<cmd>:b#<cr>", desc = "Buffer: Return to previous buffer in history" },
     ["<F1>"] = { "<cmd>let @+=expand('%')<cr>", desc = "Copy relative path of current opened in buffer file" },
