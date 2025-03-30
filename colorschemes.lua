@@ -1,3 +1,4 @@
+-- -- need hdr
 -- return {
 --     'craftzdog/solarized-osaka.nvim',
 --     lazy = false,
@@ -9,5 +10,5 @@
 --         vim.cmd("colorscheme solarized-osaka")
 --     end,
 -- }
---
+
 return {}

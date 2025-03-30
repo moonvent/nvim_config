@@ -50,6 +50,19 @@ DjangoConf = {
   pythonPath = pythonPath,
 }
 
+ImportGemBox = {
+  type = 'python',
+  request = 'launch',
+  name = 'Import GemBox',
+  program = 'manage.py',
+  args = { 'import-data', 'rpc_client/gembox/data-mapping.yml' },
+
+  -- env = {
+  --   DEBUG_SQL = '1',
+  -- },
+  pythonPath = pythonPath,
+}
+
 LaunchTestConf = {
   type = 'python',
   request = 'launch',
@@ -62,6 +75,7 @@ LaunchTestConf = {
   args = {
     "${file}",
     "-sv",
+    "-vv",
     "--log-cli-level=INFO",
     "--log-file=test_out.log",
   },
@@ -107,6 +121,7 @@ dap.configurations.python = {
   LaunchFileConf,
   DjangoConf,
   LaunchTestConf,
+  ImportGemBox
 }
 
 
@@ -127,7 +142,7 @@ dap.adapters.python = {
 dap.adapters.godot = {
   type = "server",
   host = '127.0.0.1',
-  port = 59502,
+  port = 6006,
 }
 
 
@@ -142,14 +157,14 @@ local HOME = os.getenv("HOME") or os.getenv("USERPROFILE")
 local RUST_DEBUGGER_PORT = 13001
 
 
-dap.adapters.codelldb = {
-  type = 'server',
-  port = RUST_DEBUGGER_PORT,
-  executable = {
-    command = HOME .. '/Documents/rust_debugger/extension/adapter/codelldb',
-    args = { "--port", RUST_DEBUGGER_PORT },
-  }
-}
+-- dap.adapters.codelldb = {
+--   type = 'server',
+--   port = RUST_DEBUGGER_PORT,
+--   executable = {
+--     command = HOME .. '/Documents/rust_debugger/extension/adapter/codelldb',
+--     args = { "--port", RUST_DEBUGGER_PORT },
+--   }
+-- }
 
 
 function getDirectoryName(path)
@@ -160,13 +175,13 @@ end
 
 start_file_name = getDirectoryName(vim.fn.getcwd())
 
-rust = {
-  name = "(lldb) Launch file",
-  type = "codelldb",
-  request = "launch",
-  program = string.format('${workspaceFolder}/target/debug/%s', start_file_name),
-  cwd = '${workspaceFolder}',
-}
+-- rust = {
+--   name = "(lldb) Launch file",
+--   type = "codelldb",
+--   request = "launch",
+--   program = string.format('${workspaceFolder}/target/debug/%s', start_file_name),
+--   cwd = '${workspaceFolder}',
+-- }
 
 local dap, dapui = require("dap"), require("dapui")
 
@@ -227,7 +242,12 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = "gdscript",
     callback = function()
         -- need for lsp work with gdscript
-        require('lspconfig').gdscript.setup {}
+        -- require('lspconfig').gdscript.setup {}
+
+        require("lspconfig")["gdscript"].setup({
+          name = "godot",
+          cmd = vim.lsp.rpc.connect("127.0.0.1", "6005"),
+        })
         vim.bo.shiftwidth = 2     -- amount spaces for tab
         vim.bo.expandtab = false  -- switch spaces to tabs
     end,
