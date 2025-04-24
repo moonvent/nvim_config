@@ -248,7 +248,7 @@ vim.api.nvim_create_autocmd("FileType", {
           name = "godot",
           cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
         })
-        vim.bo.shiftwidth = 2     -- amount spaces for tab
+        vim.bo.shiftwidth = 4     -- amount spaces for tab
         vim.bo.expandtab = false  -- switch spaces to tabs
     end,
 })
