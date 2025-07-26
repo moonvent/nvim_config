@@ -50,6 +50,23 @@ DjangoConf = {
   pythonPath = pythonPath,
 }
 
+
+DjangoTGConf = {
+  type = 'python',
+  request = 'launch',
+  name = 'Launch PersTgReportDjango',
+  program = '${workspaceFolder}/src/django_app/manage.py',
+  -- program = 'manage.py',
+  args = { 'runserver', '--noreload' },
+  pythonPath = pythonPath,
+  -- env = {
+  --   DEBUG_SQL = '1',
+  -- },
+  -- pythonPath = '/home/pc/Projects/python/pers_tg_reports/src/django_app/manage.py',
+  -- pythonPath = '/home/pc/Projects/python/pers_tg_reports/venv/bin/python',
+
+}
+
 ImportGemBox = {
   type = 'python',
   request = 'launch',
@@ -120,8 +137,9 @@ dap.configurations.python = {
   LaunchAppConf,
   LaunchFileConf,
   DjangoConf,
-  LaunchTestConf,
-  ImportGemBox
+  -- LaunchTestConf,
+  -- ImportGemBox,
+  DjangoTGConf
 }
 
 
@@ -175,13 +193,29 @@ end
 
 start_file_name = getDirectoryName(vim.fn.getcwd())
 
--- rust = {
---   name = "(lldb) Launch file",
---   type = "codelldb",
---   request = "launch",
---   program = string.format('${workspaceFolder}/target/debug/%s', start_file_name),
---   cwd = '${workspaceFolder}',
--- }
+rust_starter = {
+  name = "(lldb) Launch file",
+  type = "codelldb",
+  request = "launch",
+  -- program = string.format('${workspaceFolder}/target/debug/%s', start_file_name),
+  program = function()
+      -- Сборка проекта в debug-режиме:
+      local output = vim.fn.system('cargo build')
+      if vim.v.shell_error ~= 0 then
+        print(output)
+        return
+      end
+      local cwd = vim.fn.getcwd()
+      local project_name = vim.fn.fnamemodify(cwd, ':t')
+      return cwd .. '/target/debug/' .. project_name
+    end,
+  cwd = '${workspaceFolder}',
+}
+
+
+dap.configurations.rust = {
+  rust_starter
+}
 
 local dap, dapui = require("dap"), require("dapui")
 
