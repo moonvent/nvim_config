@@ -1,3 +1,5 @@
+-- DONT FORGET install ripgrep
+
 -- remove auto comment on next line and other
 vim.api.nvim_exec([[
   autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
